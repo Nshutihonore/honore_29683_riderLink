@@ -30,9 +30,11 @@ This project builds an Oracle database that records restaurants, orders and ride
 ## 3. Data source
 
 - **Dataset:** Food Delivery Dataset (Gaurav Malik), Kaggle: https://www.kaggle.com/datasets/gauravmalik26/food-delivery-dataset
-- **Size:** about 45,000 delivery records (confirm exact row count after download).
+- **File used:** `data/food_delivery.csv` (the Kaggle `train.csv` file, unchanged).
+- **Size:** 45,593 delivery records from 1 to 31 March 2022, with 1,320 rider codes, 705 restaurant locations and four vehicle types (bicycle, electric scooter, motorcycle, scooter).
 - **Main fields:** delivery person ID, age and ratings, restaurant and delivery coordinates, order date and pickup time, weather, road traffic density, vehicle condition, type of order, type of vehicle, festival indicator, city, time taken (minutes).
-- **Licence and privacy:** confirm the licence allows educational use on the Kaggle page before loading. Rider IDs in the dataset are codes, not names; no real person is identified.
+- **Licence and privacy:** licence: [copy the License line from the Kaggle Data Card]. Rider IDs in the dataset are codes, not names; no real person is identified.
+- **Data quality:** some columns contain the text "NaN", trailing spaces, prefixes such as "conditions " in the weather column and "(min) " in the time column. These are cleaned during normalization in Phase II.
 - **Adaptation for Kigali:** the data comes from Indian cities, so it is used as realistic order and rider activity. Restaurants are derived from distinct restaurant coordinates, and a rider capacity (`max_active_orders`) is assigned per vehicle type. This is a design decision, not a field in the original data. Currency and area names in the application are set for Kigali (RWF, Gasabo, Kicukiro, Nyarugenge).
 
 Raw files go in `data/`.
