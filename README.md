@@ -7,7 +7,7 @@
 - **University:** Adventist University of Central Africa (AUCA)
 - **Tools:** Oracle Database, SQL Developer, Oracle APEX
 - **Repository:** honore_29683_riderLink
-- **Current phase:** Phase I (Business Process Modeling)
+- **Current phase:** Phase II (Data Sourcing, Normalization and Logical Design)
 
 ---
 
@@ -30,14 +30,14 @@ This project builds an Oracle database that records restaurants, orders and ride
 ## 3. Data source
 
 - **Dataset:** Food Delivery Dataset (Gaurav Malik), Kaggle: https://www.kaggle.com/datasets/gauravmalik26/food-delivery-dataset
-- **File used:** `data/food_delivery.csv` (the Kaggle `train.csv` file, unchanged).
-- **Size:** 45,593 delivery records from 1 to 31 March 2022, with 1,320 rider codes, 705 restaurant locations and four vehicle types (bicycle, electric scooter, motorcycle, scooter).
+- **File used:** `data/raw/train.csv` (the Kaggle `train.csv` file, unchanged). Details: [dataset card](data/dataset_card.md).
+- **Size:** 45,593 delivery records from 11 February to 6 April 2022, with 1,320 rider codes, 388 real restaurant locations (705 coordinate pairs as written, including 3,640 rows with 0,0) and four vehicle types (bicycle, electric scooter, motorcycle, scooter).
 - **Main fields:** delivery person ID, age and ratings, restaurant and delivery coordinates, order date and pickup time, weather, road traffic density, vehicle condition, type of order, type of vehicle, festival indicator, city, time taken (minutes).
 - **Licence and privacy:** licence: [copy the License line from the Kaggle Data Card]. Rider IDs in the dataset are codes, not names; no real person is identified.
-- **Data quality:** some columns contain the text "NaN", trailing spaces, prefixes such as "conditions " in the weather column and "(min) " in the time column. These are cleaned during normalization in Phase II.
+- **Data quality:** some columns contain the text "NaN", trailing spaces, prefixes such as "conditions " in the weather column and "(min) " in the time column. They are counted in the dataset card and cleaned in Phase IV.
 - **Adaptation for Kigali:** the data comes from Indian cities, so it is used as realistic order and rider activity. Restaurants are derived from distinct restaurant coordinates, and a rider capacity (`max_active_orders`) is assigned per vehicle type. This is a design decision, not a field in the original data. Currency and area names in the application are set for Kigali (RWF, Gasabo, Kicukiro, Nyarugenge).
 
-Raw files go in `data/`.
+The raw file goes in `data/raw/` and is never edited.
 
 ## 4. Innovation (Oracle APEX dispatch application)
 
@@ -84,7 +84,9 @@ docs/research/      research log
 docs/proposal/      proposal
 docs/presentation/  slides
 docs/business_process/  Phase I diagram (PDF, .drawio) and explanation
-data/               raw dataset files
+data/raw/           raw dataset file (never edited)
+data/dataset_card.md  source, licence, size and data-quality counts
+docs/design/        normalization.md, erd.png, data_dictionary.md
 innovation/         APEX app documentation and screenshots
 ```
 
@@ -100,6 +102,15 @@ innovation/         APEX app documentation and screenshots
 - [Diagram and supporting tables (PDF)](docs/business_process/business_process_diagram.pdf)
 - [One-page explanation (PDF)](docs/business_process/business_process_explanation.pdf)
 - [Editable diagram (.drawio)](docs/business_process/RiderLink_business_process.drawio)
+
+## Phase II – Data Sourcing, Normalization and Logical Design
+
+- **Raw data and dataset card:** [data/raw/train.csv](data/raw/train.csv) and [data/dataset_card.md](data/dataset_card.md) (source, licence, size, quality counts).
+- **Normalization (UNF → 1NF → 2NF → 3NF) with real rows and the field mapping:** [docs/design/normalization.md](docs/design/normalization.md)
+- **Logical ERD (crow's foot):** [docs/design/erd.png](docs/design/erd.png)
+- **Data dictionary:** [docs/design/data_dictionary.md](docs/design/data_dictionary.md)
+
+The design has 11 tables: SERVICE_CITY, RIDER, VEHICLE_TYPE, RESTAURANT, AREA_TYPE, WEATHER_CONDITION, TRAFFIC_LEVEL, ORDER_TYPE, DELIVERY_ORDER, ORDER_ASSIGNMENT and AUDIT_LOG.
 
 ## 8. References
 
